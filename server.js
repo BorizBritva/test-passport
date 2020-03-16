@@ -1,0 +1,37 @@
+const express = require('express');
+const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
+const passport = require('passport');
+const cors = require('cors');
+
+const app = express();
+
+async function startServer() {
+    try {
+        mongoose.connect('mongodb://localhost/dacrm', {
+            useUnifiedTopology: true,
+            useNewUrlParser: true,
+            useFindAndModify: true
+        })
+
+        mongoose.connection.on('connected', () => { console.log('MongoDB is connect') });
+        mongoose.connection.on('error', (err) => { console.log('Error: no connection with MongoDB', err) });
+
+        app.use(passport.initialize());
+        app.use(passport.session());
+        require('./config/passportCrm')(passport);
+        app.use(cors());
+        app.use(bodyParser.json());
+        app.use('/editor', require('./routes/editor'))
+
+        app.listen(4000, () => {
+            console.log('Server has been started')
+        })
+
+    }
+    catch(e) {
+        console.log(e, 'Error!')
+    }
+}
+
+startServer();
