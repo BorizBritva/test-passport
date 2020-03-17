@@ -8,6 +8,12 @@ export default function rootReducers ( state = initialState, action ) {
         case  'INPUT_PASSWORD':
             return { ...state, password: action.payload };
         break;
+        case  'INPUT_NAME':
+            return { ...state, name: action.payload };
+        break;
+        case  'INPUT_PHONE':
+            return { ...state, phone: action.payload };
+        break;
         default: return state;
     }
 }

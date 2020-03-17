@@ -3,6 +3,7 @@ const express = require('express');
 const JwtStrategy = require('passport-jwt').Strategy;
 const ExtractJwt = require('passport-jwt').ExtractJwt;
 const Editor = require('../models/editor/model');
+const Admin = require('../models/admin/model');
 
 module.exports = function(passport) {
   var opts = {};
@@ -10,7 +11,7 @@ module.exports = function(passport) {
   opts.secretOrKey = 'secret';
   opts.audience = 'localhost';
   passport.use(new JwtStrategy(opts, function(jwt_payload, done) {
-      User.findOne({id: jwt_payload.sub}, function(err, user) {
+      Editor.findOne({id: jwt_payload.sub}, function(err, user) {
           if (err) {
               return done(err, false);
           }

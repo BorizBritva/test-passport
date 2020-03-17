@@ -8,8 +8,10 @@ const editor = new Schema({
   login: String,
   name: String,
   password: String,
-  hash: String,
-  salt: String,
+  contacts: {
+    tlephone: String,
+    meesenger: String
+  },
   tasks: {
     allTask: Array,
     inWorks: Array,
@@ -20,7 +22,7 @@ const editor = new Schema({
   custom_fields: Array
 })
 
-editor.methods.validEditor = function(log, pas) {
+editor.methods.validData = function(log, pas) {
   return this.login === log && this.password === pas ? true : false;
 }
 

@@ -1,10 +1,15 @@
+import 'bootstrap/dist/css/bootstrap.min.css';
 import React, {Fragment} from 'react';
+import './home.sass';
 import { Router, Route, Switch } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Login from '../components/projectforms/login';
-import {submitLogin, inputLogin, inputPassword} from '../actions/actionLogin';
+import RegForm from '../components/projectforms/regindacrm';
+import {registration, submitLogin, inputLogin, inputPassword, inputName, inputPhone} from '../actions/actionLogin';
+import Header from '../components/header';
+import Editor from '../components/editor';
 
 const history = createBrowserHistory();
 
@@ -12,14 +17,19 @@ const mapStateProps = state => {
     return {
         login: state.login,
         password: state.password,
+        name: state.name,
+        phone: state.phone
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return {
+        registration: bindActionCreators(registration, dispatch),
         submitLogin: bindActionCreators(submitLogin, dispatch),
         inputLogin: bindActionCreators(inputLogin, dispatch),
-        inputPassword: bindActionCreators(inputPassword, dispatch)
+        inputPassword: bindActionCreators(inputPassword, dispatch),
+        inputName: bindActionCreators(inputName, dispatch),
+        inputPhone: bindActionCreators(inputPhone, dispatch),
     };
 }
 
@@ -27,7 +37,29 @@ class App extends React.Component {
     render() {
         return (
             <>
-                <Login login={this.props.login} password={this.props.password} submit={this.props.submitLogin} inputLogin={this.props.inputLogin} inputPassword={this.props.inputPassword}/>
+            <Router history={ history }>
+            <Header />
+                <Switch>
+                  <RegForm path="/" exact  login={this.props.login}
+                                           password={this.props.password}
+                                           name={this.props.name}
+                                           phone={this.props.phone}
+                                           inputLogin={this.props.inputLogin}
+                                           inputPassword={this.props.inputPassword}
+                                           inputName={this.props.inputName}
+                                           inputPhone={this.props.inputPhone}
+                                           submit={this.props.registration}
+                  />
+                  <Route path="/auth" exact render={() => <Login login={this.props.login}
+                                                                 password={this.props.password}
+                                                                 submit={this.props.submitLogin}
+                                                                 inputLogin={this.props.inputLogin}
+                                                                 inputPassword={this.props.inputPassword}
+                                                          /> }
+                   />
+                   <Route path="/dacrm/editor/:id" exact component={Editor} />
+                </Switch>
+            </Router>
             </>
         )
     }

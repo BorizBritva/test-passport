@@ -22,7 +22,10 @@ async function startServer() {
         require('./config/passportCrm')(passport);
         app.use(cors());
         app.use(bodyParser.json());
+
+        app.use('/users', require('./routes/auth'))
         app.use('/editor', require('./routes/editor'))
+        app.use('/admin', require('./routes/admin'))
 
         app.listen(4000, () => {
             console.log('Server has been started')

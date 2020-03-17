@@ -3,7 +3,7 @@ const submitLogin = (e, loginData) => {
         e.preventDefault();
         //const { login, password } = loginData;
 
-        fetch('/editor/auth', {
+        fetch('/users/auth', {
           method: "POST",
           headers: new Headers({
             Accept: 'application/json',
@@ -16,12 +16,37 @@ const submitLogin = (e, loginData) => {
               if (response.ok) {
                 response.json()
                   .then( data => {
+                    if (data.error) console.log(data);
                       localStorage.setItem('token', data.token);
                       localStorage.setItem('user', JSON.stringify(data.editor));
                   })
               }
           })
     }
+}
+
+const registration = (e, regData) => {
+  return (dispatch, getState) => {
+    e.preventDefault();
+
+    fetch('/editor/addeditor', {
+      method: "POST",
+      headers: new Headers({
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      }),
+      mode: 'same-origin',
+      body: JSON.stringify(regData)
+      })
+      .then( response => {
+          if (response.ok) {
+            response.json()
+              .then( data => {
+                  console.log(data)
+              })
+          }
+      })
+  }
 }
 
 const inputLogin = (login) => {
@@ -42,4 +67,22 @@ const inputPassword = (password) => {
     }
 }
 
-export {submitLogin, inputLogin, inputPassword};
+const inputName = (name) => {
+    return (dispatch, getState) => {
+        dispatch({
+            type: 'INPUT_NAME',
+            payload: name
+        })
+    }
+}
+
+const inputPhone = (phone) => {
+    return (dispatch, getState) => {
+        dispatch({
+            type: 'INPUT_PHONE',
+            payload: phone
+        })
+    }
+}
+
+export {registration, submitLogin, inputLogin, inputPassword, inputName, inputPhone};
