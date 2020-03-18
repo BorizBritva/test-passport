@@ -3,6 +3,7 @@ const initialState = {
     password: '',
     name: '',
     phone: '',
+    error: '',
 }
 
 export default initialState;

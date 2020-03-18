@@ -1,4 +1,5 @@
 const express = require('express');
+const session = require ('express-session');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const passport = require('passport');
@@ -17,15 +18,17 @@ async function startServer() {
         mongoose.connection.on('connected', () => { console.log('MongoDB is connect') });
         mongoose.connection.on('error', (err) => { console.log('Error: no connection with MongoDB', err) });
 
-        app.use(passport.initialize());
-        app.use(passport.session());
-        require('./config/passportCrm')(passport);
+
+        require('./config/passportCrm');
+
         app.use(cors());
         app.use(bodyParser.json());
 
-        app.use('/users', require('./routes/auth'))
-        app.use('/editor', require('./routes/editor'))
-        app.use('/admin', require('./routes/admin'))
+        app.use('/editor', require('./routes/editor'));
+
+        app.use(passport.initialize());
+        app.use(passport.session());
+        //require('./config/passportCrm')(passport);
 
         app.listen(4000, () => {
             console.log('Server has been started')

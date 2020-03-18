@@ -2,6 +2,9 @@ import React from 'react';
 
 export default class Login extends React.Component {
     render() {
+
+        const error = (err) => { if (err && err.length > 0) { return <div className="alert alert-danger" role="alert">{err}</div> }}
+
         return(
           <div className="container">
             <div className="login__wrap row d-flex justify-content-center">
@@ -24,6 +27,9 @@ export default class Login extends React.Component {
                     </div>
                     <div className="form__button-wrap">
                         <input type="submit" className="btn btn-primary btn-lg btn-block" value="Войти" />
+                    </div>
+                    <div className="login_error">
+                      {error(this.props.err)}
                     </div>
                     </div>
                 </form>

@@ -18,7 +18,8 @@ const mapStateProps = state => {
         login: state.login,
         password: state.password,
         name: state.name,
-        phone: state.phone
+        phone: state.phone,
+        error: state.error,
     }
 }
 
@@ -55,6 +56,7 @@ class App extends React.Component {
                                                                  submit={this.props.submitLogin}
                                                                  inputLogin={this.props.inputLogin}
                                                                  inputPassword={this.props.inputPassword}
+                                                                 err={this.props.error}
                                                           /> }
                    />
                    <Route path="/dacrm/editor/:id" exact component={Editor} />

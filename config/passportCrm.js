@@ -1,11 +1,35 @@
 const express = require('express');
-//const passport = require('passport');
-const JwtStrategy = require('passport-jwt').Strategy;
-const ExtractJwt = require('passport-jwt').ExtractJwt;
+const passport = require('passport');
+const LocalStrategy = require('passport-local').Strategy;
+const mongoose = require('mongoose');
+/*const JwtStrategy = require('passport-jwt').Strategy;
+const ExtractJwt = require('passport-jwt').ExtractJwt;*/
 const Editor = require('../models/editor/model');
 const Admin = require('../models/admin/model');
 
-module.exports = function(passport) {
+passport.use(new LocalStrategy(
+  {
+  usernameField: 'login'
+  },
+  (username, password, done) => {
+    Editor.findOne({login: username}, (err, editor) => {
+      if (err) return done(err);
+      if (!editor) {
+        return done(null, false, {
+          error: 'Неверный логин'
+        })
+      }
+      if (!editor.validPassword(password)) {
+        return done(null, false, {
+          error: 'Неверный пароль'
+        })
+      }
+      return done(null, editor)
+    })
+}))
+
+
+/*module.exports = function(passport) {
   var opts = {};
   opts.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
   opts.secretOrKey = 'secret';
@@ -23,4 +47,4 @@ module.exports = function(passport) {
           }
       });
   }));
-}
+}*/

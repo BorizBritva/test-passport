@@ -14,6 +14,9 @@ export default function rootReducers ( state = initialState, action ) {
         case  'INPUT_PHONE':
             return { ...state, phone: action.payload };
         break;
+        case  'ERROR':
+            return { ...state, error: action.payload };
+        break;
         default: return state;
     }
 }

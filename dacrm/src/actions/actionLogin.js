@@ -3,7 +3,7 @@ const submitLogin = (e, loginData) => {
         e.preventDefault();
         //const { login, password } = loginData;
 
-        fetch('/users/auth', {
+        fetch('/editor/login', {
           method: "POST",
           headers: new Headers({
             Accept: 'application/json',
@@ -16,9 +16,21 @@ const submitLogin = (e, loginData) => {
               if (response.ok) {
                 response.json()
                   .then( data => {
-                    if (data.error) console.log(data);
-                      localStorage.setItem('token', data.token);
-                      localStorage.setItem('user', JSON.stringify(data.editor));
+                      if (data.error) {
+                        localStorage.removeItem('token');
+                        localStorage.removeItem('user');
+                        dispatch({
+                          type: 'ERROR',
+                          payload: data.error
+                        })
+                      } else {
+                        localStorage.setItem('token', data.token);
+                        localStorage.setItem('user', JSON.stringify(data.editor));
+                        dispatch({
+                          type: 'ERROR',
+                          payload: ''
+                        })
+                      }
                   })
               }
           })
