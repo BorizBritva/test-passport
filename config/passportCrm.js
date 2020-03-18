@@ -15,16 +15,27 @@ passport.use(new LocalStrategy(
     Editor.findOne({login: username}, (err, editor) => {
       if (err) return done(err);
       if (!editor) {
-        return done(null, false, {
-          error: 'Неверный логин'
+        Admin.findOne({login: username}, (err, admin) => {
+          if (err) return done(err);
+          if (!admin) {
+            return done(null, false, {error: 'Неверный логин'})
+          }
+          if (!admin.validPassword(password)) {
+            return done(null, false, {error: 'Неверный пароль'})
+          }
+          return done(null, admin, {editor: 0})
         })
+        return;
+        /*return done(null, false, {
+          error: 'Неверный логин'
+        })*/
       }
       if (!editor.validPassword(password)) {
         return done(null, false, {
           error: 'Неверный пароль'
         })
       }
-      return done(null, editor)
+      return done(null, editor, {editor: 1})
     })
 }))
 

@@ -13,7 +13,16 @@ router.post('/addadmin', (req, res) => {
     if (doc != null && doc.login === login) {
       res.send({error: "Admin already exists"})
     } else {
-      new Admin(req.body).save();
+
+      let admin = new Admin();
+      admin.login = login;
+      admin.password = password;
+
+      admin.setPassword(password);
+      admin.save((err) => {
+        let token = admin.generateJwt();
+      })
+
       Editor.find({})
         .then(editors => {
             return editors

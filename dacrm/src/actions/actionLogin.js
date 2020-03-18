@@ -3,7 +3,7 @@ const submitLogin = (e, loginData) => {
         e.preventDefault();
         //const { login, password } = loginData;
 
-        fetch('/editor/login', {
+        fetch('/login', {
           method: "POST",
           headers: new Headers({
             Accept: 'application/json',
@@ -25,11 +25,9 @@ const submitLogin = (e, loginData) => {
                         })
                       } else {
                         localStorage.setItem('token', data.token);
-                        localStorage.setItem('user', JSON.stringify(data.editor));
-                        dispatch({
-                          type: 'ERROR',
-                          payload: ''
-                        })
+                        localStorage.setItem('user', JSON.stringify(data.user));
+                        localStorage.setItem('edit', data.edit);
+                        window.location.assign(`${window.location}/user/dashboard/${data.user}`)
                       }
                   })
               }

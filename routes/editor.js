@@ -34,11 +34,12 @@ router.post('/addeditor', (req, res) => {
   })
 })
 
-router.post('/login', (req, res) => {
+/*router.post('/login', (req, res) => {
   const login = req.body.login;
   const password = req.body.password;
 
   passport.authenticate('local', (err, editor, info) => {
+    console.log(editor)
     let token;
     if (err) res.send({error: err});
     if (editor) {
@@ -49,32 +50,32 @@ router.post('/login', (req, res) => {
     }
   })(req, res)
 
-  /*Editor.findOne({login: login}, (err, doc) => {
-    if (err) console.log("Error: Что-то пошло не так", err);
-
-    if (!doc) return res.send({error: "User is not found"});
-
-    if (doc.validEditor(login, password)) {
-
-        let token = jwt.sign(doc.toJSON(), 'testsecret', {
-          expiresIn: 1000
-        });
-
-        res.send({
-          success: true,
-          token: `JWT ${token}`,
-          editor: {
-            id: doc._id,
-            login: doc.login,
-            name: doc.name
-          }
-        })
-
-    } else {
-      res.send({error: "Wrong login or password"})
-    };
-  })*/
-})
+  // Editor.findOne({login: login}, (err, doc) => {
+  //   if (err) console.log("Error: Что-то пошло не так", err);
+  //
+  //   if (!doc) return res.send({error: "User is not found"});
+  //
+  //   if (doc.validEditor(login, password)) {
+  //
+  //       let token = jwt.sign(doc.toJSON(), 'testsecret', {
+  //         expiresIn: 1000
+  //       });
+  //
+  //       res.send({
+  //         success: true,
+  //         token: `JWT ${token}`,
+  //         editor: {
+  //           id: doc._id,
+  //           login: doc.login,
+  //           name: doc.name
+  //         }
+  //       })
+  //
+  //   } else {
+  //     res.send({error: "Wrong login or password"})
+  //   };
+  // })
+})*/
 
 router.post('/dashboard', (req, res) => {
   console.log(req)

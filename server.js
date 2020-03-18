@@ -24,7 +24,9 @@ async function startServer() {
         app.use(cors());
         app.use(bodyParser.json());
 
+        app.use('/', require('./routes/auth'));
         app.use('/editor', require('./routes/editor'));
+        app.use('/admin', require('./routes/admin'));
 
         app.use(passport.initialize());
         app.use(passport.session());
