@@ -7,6 +7,7 @@ const auth = jwt({
   userProperty: 'user'
 });
 const Editor = require('../models/editor/model');
+const Admin = require('../models/admin/model');
 const passport = require('passport');
 //const jwt = require('jsonwebtoken');
 
@@ -30,6 +31,15 @@ router.post('/addeditor', (req, res) => {
       editor.save((err) => {
         let token = editor.generateJwt();
       })
+
+      Admin.find({}, (err, admin) => {
+          if (err) return;
+          admin.forEach(item => {
+              item.editors.push(editor);
+              item.save();
+          })
+      })
+
       res.send({message: "User added successfully"});
     }
   })

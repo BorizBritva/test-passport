@@ -38,6 +38,7 @@ router.post('/addadmin', (req, res) => {
                     })
                 })
         })
+        
       res.send({message: "Admin added successfully"});
     }
   })

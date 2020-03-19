@@ -1,5 +1,6 @@
 import React, {Fragment} from 'react';
 import AdminHeader from './headnav';
+import Tasks from './tasks/index';
 import SideBar from './sidebar';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './account.sass';
@@ -13,6 +14,7 @@ export default class Accounts extends React.Component {
                 <SideBar />
                 <main className="main-content p-0 col-sm-12 col-md-9 col-lg-10">
                   <AdminHeader />
+                  <Tasks />
                 </main>
                 </div>
               </div>
