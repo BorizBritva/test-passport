@@ -8,8 +8,8 @@ export default class Accounts extends React.Component {
     render() {
         return(
             <>
-              <div className="container-fluid">
-                <div className="row">
+              <div className="container-fluid all__content">
+                <div className="row all__content">
                 <SideBar />
                 <main className="main-content p-0 col-sm-12 col-md-9 col-lg-10">
                   <AdminHeader />

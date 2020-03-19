@@ -1,11 +1,23 @@
-html, body
-  min-width: 100%
+html, body, #root
+  height: 100%
+  margin: 0
+  padding: 0
+  overflow: hidden
+
+.header-wrap
+  background: rgb(150,170,205)
+
+.all__content
+  height: 100%
 
 .sidebar__logo
   display: flex
   justify-content: center
   align-items: center
   height: 50px
+  box-shadow: 0 0.125rem 0.625rem rgba(90,97,105,.12)
+  background: rgb(150,170,205)
+  border-bottom: 1px solid #007bff
 
 .row
   display: flex
@@ -21,6 +33,7 @@ html, body
 .main-sidebar
   height: 100%
   box-shadow: 0 0.125rem 0.625rem rgba(90,97,105,.12)
+  background: rgba(150,170,205,.12)
 
 .sidebar__list
   padding: 0
@@ -30,9 +43,18 @@ html, body
   padding: 10px 20px
   margin-bottom: 2px
   cursor: pointer
+  position: relative
 
 .sdb__button-name
   padding-left: 10px
 
-.sdb-link
+.sdb__link
+  color: #212529
+  width: 100%
+  display: flex
+  flex-wrap: wrap
+  align-items: center
+
+.sdb__link:hover
+  color: #712510
   text-decoration: none
