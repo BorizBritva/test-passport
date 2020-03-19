@@ -12,8 +12,7 @@ const passport = require('passport');
 
 router.post('/addeditor', (req, res) => {
 
-  let login = req.body.login;
-  let password = req.body.password;
+  let {login, password, name, phone} = req.body;
 
   Editor.findOne({login: login}, (err, doc) => {
     if (doc != null && doc.login === login) {
@@ -24,6 +23,8 @@ router.post('/addeditor', (req, res) => {
       let editor = new Editor();
       editor.login = login;
       editor.password = password;
+      editor.name = name;
+      editor.phone = phone;
 
       editor.setPassword(password);
       editor.save((err) => {

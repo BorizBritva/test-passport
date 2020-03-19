@@ -17,8 +17,7 @@ async function startServer() {
 
         mongoose.connection.on('connected', () => { console.log('MongoDB is connect') });
         mongoose.connection.on('error', (err) => { console.log('Error: no connection with MongoDB', err) });
-
-
+        
         require('./config/passportCrm');
 
         app.use(cors());

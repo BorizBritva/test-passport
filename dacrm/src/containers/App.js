@@ -40,7 +40,6 @@ class App extends React.Component {
         return (
             <>
             <Router history={ history }>
-            <Header />
                 <Switch>
                   <RegForm path="/" exact  login={this.props.login}
                                            password={this.props.password}
@@ -60,8 +59,8 @@ class App extends React.Component {
                                                                  err={this.props.error}
                                                           /> }
                    />
-                   <Route path="/dacrm/user/:id" exact component={Editor} />
-                   <Route path="/dacrm/accounts/:id" exact component={Accounts} />
+                   <Route path="/dacrm/user/edit=:id" exact component={Editor} />
+                   <Route path="/dacrm/accounts/acc=:id" exact component={Accounts} />
                 </Switch>
             </Router>
             </>

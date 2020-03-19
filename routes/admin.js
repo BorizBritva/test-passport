@@ -6,8 +6,7 @@ const passport = require('passport');
 const jwt = require('jsonwebtoken');
 
 router.post('/addadmin', (req, res) => {
-  let login = req.body.login;
-  let password = req.body.password;
+  let {login, password, name} = req.body;
 
   Admin.findOne({login: login}, (err, doc) => {
     if (doc != null && doc.login === login) {
@@ -17,6 +16,7 @@ router.post('/addadmin', (req, res) => {
       let admin = new Admin();
       admin.login = login;
       admin.password = password;
+      admin.name = name;
 
       admin.setPassword(password);
       admin.save((err) => {

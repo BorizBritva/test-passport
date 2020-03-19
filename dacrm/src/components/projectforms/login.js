@@ -1,4 +1,5 @@
-import React from 'react';
+import React, {Fragment} from 'react';
+import Header from '../header';
 
 export default class Login extends React.Component {
     render() {
@@ -6,6 +7,8 @@ export default class Login extends React.Component {
         const error = (err) => { if (err && err.length > 0) { return <div className="alert alert-danger" role="alert">{err}</div> }}
 
         return(
+          <>
+          <Header />
           <div className="container">
             <div className="login__wrap row d-flex justify-content-center">
                 <form className="login__form col col-lg-4" onSubmit={e => this.props.submit(e, {login: this.props.login, password: this.props.password})}>
@@ -35,6 +38,7 @@ export default class Login extends React.Component {
                 </form>
             </div>
             </div>
+            </>
         )
     }
 }

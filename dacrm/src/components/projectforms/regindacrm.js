@@ -1,8 +1,11 @@
-import React from 'react';
+import React, {Fragment} from 'react';
+import Header from '../header';
 
 export default class RegForm extends React.Component {
     render() {
         return(
+          <>
+          <Header />
           <div className="container">
           <div className="reg__wrap row d-flex justify-content-center">
           <form className="reg__form" onSubmit={e => this.props.submit(e, {login: this.props.login, password: this.props.password, name: this.props.name, phone: this.props.phone})}>
@@ -39,6 +42,7 @@ export default class RegForm extends React.Component {
            </form>
           </div>
           </div>
+          </>
         )
     }
 }
