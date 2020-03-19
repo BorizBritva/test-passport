@@ -27,7 +27,7 @@ const submitLogin = (e, loginData) => {
                         localStorage.setItem('token', data.token);
                         localStorage.setItem('user', JSON.stringify(data.user));
                         localStorage.setItem('edit', data.edit);
-                        window.location.assign(`${window.location}/user/dashboard/${data.user}`)
+                        window.location.assign(`${window.location.origin}/dacrm/user/${data.username}`)
                       }
                   })
               }

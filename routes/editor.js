@@ -4,7 +4,7 @@ const router = express.Router();
 const jwt = require('express-jwt');
 const auth = jwt({
   secret: secret.secret,
-  userProperty: 'payload'
+  userProperty: 'user'
 });
 const Editor = require('../models/editor/model');
 const passport = require('passport');
@@ -77,8 +77,9 @@ router.post('/addeditor', (req, res) => {
   // })
 })*/
 
-router.post('/dashboard', (req, res) => {
-  console.log(req)
+router.post('/dashboard', auth, (req, res) => {
+    console.log(req.user);
+    res.send({test: "test"})
 })
 
 module.exports = router;

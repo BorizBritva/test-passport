@@ -14,7 +14,7 @@ router.post('/login', (req, res) => {
     if (err) res.send({error: err});
     if (user) {
       token = user.generateJwt();
-      res.send({token: token, user: user._id, edit: info.editor})
+      res.send({token: token, user: user._id, edit: info.editor, username: info.username})
     } else {
       res.send(info)
     }

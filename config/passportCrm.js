@@ -23,7 +23,7 @@ passport.use(new LocalStrategy(
           if (!admin.validPassword(password)) {
             return done(null, false, {error: 'Неверный пароль'})
           }
-          return done(null, admin, {editor: 0})
+          return done(null, admin, {editor: 0, username: admin.name})
         })
         return;
         /*return done(null, false, {
@@ -35,7 +35,7 @@ passport.use(new LocalStrategy(
           error: 'Неверный пароль'
         })
       }
-      return done(null, editor, {editor: 1})
+      return done(null, editor, {editor: 1, username: editor.name})
     })
 }))
 

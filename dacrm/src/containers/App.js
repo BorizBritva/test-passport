@@ -10,6 +10,7 @@ import RegForm from '../components/projectforms/regindacrm';
 import {registration, submitLogin, inputLogin, inputPassword, inputName, inputPhone} from '../actions/actionLogin';
 import Header from '../components/header';
 import Editor from '../components/editor';
+import Accounts from '../components/accaounts';
 
 const history = createBrowserHistory();
 
@@ -59,7 +60,8 @@ class App extends React.Component {
                                                                  err={this.props.error}
                                                           /> }
                    />
-                   <Route path="/dacrm/editor/:id" exact component={Editor} />
+                   <Route path="/dacrm/user/:id" exact component={Editor} />
+                   <Route path="/dacrm/accounts/:id" exact component={Accounts} />
                 </Switch>
             </Router>
             </>
