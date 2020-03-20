@@ -1,5 +1,6 @@
 const amocrm = require('amocrm-js');
 const Tasks = require('../models/tasks/model');
+const Admin = require('../models/admin/model');
 
 // generate ID for tasks data
 const createDBid = (min, max) => {
@@ -51,6 +52,17 @@ Tasks.find({}, (err, doc) => {
                         };
 
                         doc.save();
+
+                        return addtask;
+                    })
+                    .then(addtask => {
+                        Admin.find({}, (err, admins) => {
+                            if (err) return;
+                            admins.forEach(item => {
+                                if (!item.tasks.works.find(item => item.id == addtask.id)) item.tasks.works.push(addtask);
+                                item.save();
+                            })
+                        })
                     })
 
                 })
@@ -85,6 +97,16 @@ Tasks.find({}, (err, doc) => {
                         };
 
                         doc.save();
+                        return addtask;
+                    })
+                    .then(addtask => {
+                        Admin.find({}, (err, admins) => {
+                            if (err) return;
+                            admins.forEach(item => {
+                                if (!item.tasks.works.find(item => item.id == addtask.id)) item.tasks.works.push(addtask);
+                                item.save();
+                            })
+                        })
                     })
 
                 })
@@ -94,8 +116,8 @@ Tasks.find({}, (err, doc) => {
           })
 
     })
-
-const updateTask = () => {
+//
+/*const updateTask = () => {
     let newTask = [];
     AmoCRM.request
         .get( '/api/v2/leads?status=28958392' )
@@ -126,6 +148,16 @@ const updateTask = () => {
                           };
 
                           doc.save();
+                          return addtask;
+                      })
+                      .then(addtask => {
+                          Admin.find({}, (err, admins) => {
+                              if (err) return;
+                              admins.forEach(item => {
+                                  if (!item.tasks.works.find(item => item.id == addtask.id)) item.tasks.works.push(addtask);
+                                  item.save();
+                              })
+                          })
                       })
 
                   })
@@ -165,6 +197,16 @@ const updateTask = () => {
                                 };
 
                                 doc.save();
+                                return addtask;
+                            })
+                            .then(addtask => {
+                                Admin.find({}, (err, admins) => {
+                                    if (err) return;
+                                    admins.forEach(item => {
+                                        if (!item.tasks.works.fin(item => item.id == addtask.id)) item.tasks.works.push(addtask);
+                                        item.save();
+                                    })
+                                })
                             })
 
                         })
@@ -177,6 +219,6 @@ const updateTask = () => {
         })
 }
 
-setInterval(() => updateTask(), 50000);
+setInterval(() => updateTask(), 1000);*/
 
 module.exports = AmoCRM;

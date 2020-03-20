@@ -45,6 +45,15 @@ router.post('/addeditor', (req, res) => {
   })
 })
 
+router.post('/get-tasks', auth, (req, res) => {
+    let editor = req.body.id.toString().slice(1, -1);
+    Editor.findOne({_id: editor}, (err, doc) => {
+        if (err) res.send({error: 'error'});
+        if (!doc) res.send({error: 'error'});
+        res.send(doc.tasks)
+    })
+})
+
 /*router.post('/login', (req, res) => {
   const login = req.body.login;
   const password = req.body.password;

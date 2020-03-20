@@ -4,6 +4,9 @@ const initialState = {
     name: '',
     phone: '',
     error: '',
+    sidebarType: '',
+    accaunTasks: [],
+    editorTasks: []
 }
 
 export default initialState;
