@@ -25,9 +25,9 @@ router.post('/addadmin', (req, res) => {
       admin.name = name;
 
       admin.setPassword(password);
-      admin.save((err) => {
-        let token = admin.generateJwt();
-      })
+      // admin.save((err) => {
+      //   let token = admin.generateJwt();
+      // })
 
       Promise.all([Tasks.find({}), Editor.find({})])
         .then(data => {
@@ -36,7 +36,9 @@ router.post('/addadmin', (req, res) => {
 
             admin.tasks.works = [...tasks];
             admin.editors = [...editors];
-            admin.save();
+            admin.save((err) => {
+              let token = admin.generateJwt();
+            })
         })
 
       res.send({message: "Admin added successfully"});
@@ -79,6 +81,7 @@ router.post('/get-tasks/status', auth, (req, res) => {
 
             let adminName = { name: 'Аккаунт', values: [ { value: data[0].name } ] };
             let editName = { name: 'Editor', values: [ { value: data[1].name } ] };
+            task.resp_id = admin;
             task.custom_fields = [ ...task.custom_fields, adminName, editName ];
 
             Editor.findOne({_id: editor}, (err, doc) => {
@@ -94,7 +97,7 @@ router.post('/get-tasks/status', auth, (req, res) => {
                         doc.tasks.considerations.splice(i, 1)
                     }
                 })
-                doc.tasks.status.push(task);
+                //doc.tasks.status.push(task);
                 doc.save();
                 res.send({...doc.tasks, editors: doc.editors})
             })
