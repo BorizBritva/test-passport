@@ -1,6 +1,7 @@
 const express = require('express');
 const secret = require('../config/databaseConf');
 const router = express.Router();
+const AmoCRM = require('../routes/apiamocrm');
 const Admin = require('../models/admin/model');
 const Editor = require('../models/editor/model');
 const Tasks = require('../models/tasks/model');
@@ -101,6 +102,112 @@ router.post('/get-tasks/status', auth, (req, res) => {
                 doc.save();
                 res.send({...doc.tasks, editors: doc.editors})
             })
+        })
+        .catch(err => {
+            return
+        })
+
+})
+
+router.post('/get-tasks/revs', auth, (req, res) => {
+    let admin = req.body.user.toString();
+    let task = req.body.task;
+    let editor = req.body.task.editor;
+
+    Promise.all([Admin.findOne({_id: admin}), Editor.findOne({_id: editor})])
+        .then(data => {
+
+            Editor.findOne({_id: editor}, (err, doc) => {
+                if (err) return;
+                doc.tasks.inChecks.forEach((item, i) => {
+                    if (item.id == task.id) {
+                        doc.tasks.inChecks.splice(i, 1)
+                    }
+                })
+                doc.tasks.completion.push(task);
+                doc.save()
+            })
+
+            Admin.findOne({_id: admin}, (err, doc) => {
+                if (err) return;
+                doc.tasks.check.forEach((item, i) => {
+                    if (item.id == task.id) {
+                        doc.tasks.check.splice(i, 1)
+                    }
+                })
+                doc.tasks.edits.push(task);
+                doc.save();
+                res.send({...doc.tasks, editors: doc.editors})
+            })
+        })
+        .catch(err => {
+            return
+        })
+})
+
+router.post('/get-tasks/accept', auth, (req, res) => {
+    let admin = req.body.user.toString();
+    let task = req.body.task;
+    let editor = req.body.task.editor;
+
+    Promise.all([Admin.findOne({_id: admin}), Editor.findOne({_id: editor})])
+        .then(data => {
+
+            console.log(task.id,data[0].name, data[1].name)
+
+            Editor.findOne({_id: editor}, (err, doc) => {
+                if (err) return;
+                doc.tasks.inChecks.forEach((item, i) => {
+                    if (item.id == task.id) {
+                        doc.tasks.inChecks.splice(i, 1)
+                    }
+                })
+                doc.tasks.final.push(task);
+                doc.save()
+            })
+
+            Admin.findOne({_id: admin}, (err, doc) => {
+                if (err) return;
+                doc.tasks.check.forEach((item, i) => {
+                    if (item.id == task.id) {
+                        doc.tasks.check.splice(i, 1)
+                    }
+                })
+                doc.tasks.final.push(task);
+                doc.save();
+                res.send({...doc.tasks, editors: doc.editors})
+            })
+
+            AmoCRM.request
+                .post( '/api/v2/leads', {
+                    update: [
+                        {
+                            id: task.id,
+                            status_id: 28958398,
+                            updated_at: Date.now(),
+                            name: task.name,
+                            custom_fields: [{
+                              id: 640185,
+                              values: [{
+                                value: data[0].name
+                              }]
+                            }, {
+                              id: 640187,
+                              values: [{
+                                value: data[1].name
+                              }]
+                            }]
+                            // другие поля ...
+                        }
+                    ]
+                })
+                .then( data => {
+                    console.log( 'Полученные данные', data._embedded.items );
+                })
+                .catch( e => {
+                    console.log( 'Произошла ошибка создания контакта', e );
+                })
+
         })
         .catch(err => {
             return

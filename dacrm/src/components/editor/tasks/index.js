@@ -6,6 +6,8 @@ import submitTask from '../../../actions/EditorTask';
 import WorksList from './works';
 import InWorks from './inWorks';
 import InCheck from './inCheck';
+import Revision from './revision';
+import FinalWorks from './final';
 
 const mapStateProps = state => {
     return {
@@ -32,6 +34,8 @@ class Tasks extends React.Component {
                 <WorksList works={this.props.tasks.allTask} submit={this.props.submitTask}/>
                 <InWorks works={this.props.tasks.inWorks} submit={this.props.submitTask}/>
                 <InCheck works={this.props.tasks.inChecks}/>
+                <Revision works={this.props.tasks.completion} submit={this.props.submitTask}/>
+                <FinalWorks works={this.props.tasks.final}/>
             </div>
         )
     }

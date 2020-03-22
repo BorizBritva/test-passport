@@ -5,9 +5,15 @@ import App from './containers/App';
 import * as serviceWorker from './serviceWorker';
 import { Provider } from "react-redux";
 import store from "./store/store";
+import {Helmet} from "react-helmet";
 
 ReactDOM.render(
     <Provider store={store}>
+        <Helmet>
+            <meta charSet="utf-8" />
+            <title>DA CRM</title>
+            <meta name="description" content="DA CRM Official" />
+        </Helmet>
         <App />
     </Provider>,
     document.getElementById('root')

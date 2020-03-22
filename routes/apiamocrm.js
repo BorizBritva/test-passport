@@ -40,9 +40,13 @@ Tasks.find({}, (err, doc) => {
                     .get(item.contacts._links.self.href)
                     .then( name => {
                         //name._embedded.items[0].custom_fields[0].values[0].value
-                        
                         let link = !name._embedded.items[0].custom_fields[0] ? 'ссылка отсутствует' : name._embedded.items[0].custom_fields[0].values[0].value;
-                        let addtask = {...item, custom_fields: [{id: item.contacts.id[0], name: 'Заказчик', values: [{ value: name._embedded.items[0].name } ] }, {name: 'Ссылка на креотивы', values: [{ value: link }] }, ...item.custom_fields ] };
+                        let customer = {id: item.contacts.id[0], name: 'Заказчик', values: [{ value: name._embedded.items[0].name } ] };
+                        let linToCreo = {name: 'Ссылка на креотивы', values: [{ value: link }] };
+                        item.custom_fields.push(customer);
+                        item.custom_fields.push(linToCreo);
+                        //let addtask = {...item, custom_fields: [{id: item.contacts.id[0], name: 'Заказчик', values: [{ value: name._embedded.items[0].name } ] }, {name: 'Ссылка на креотивы', values: [{ value: link }] }, ...item.custom_fields ] };
+                        let addtask = item;
                         return addtask;
                     })
                     .then(addtask => {
@@ -86,8 +90,17 @@ Tasks.find({}, (err, doc) => {
                   AmoCRM.request
                     .get(item.contacts._links.self.href)
                     .then( name => {
+                        // let link = !name._embedded.items[0].custom_fields[0] ? 'ссылка отсутствует' : name._embedded.items[0].custom_fields[0].values[0].value;
+                        // let addtask = {...item, custom_fields: [{id: name._embedded.items[0].id , name: 'Заказчик', values: [{ value: name._embedded.items[0].name } ] }, {name: 'Ссылка на креотивы', values: [{ value: link }] }, ...item.custom_fields ], replacements: true }
+                        // return addtask;
                         let link = !name._embedded.items[0].custom_fields[0] ? 'ссылка отсутствует' : name._embedded.items[0].custom_fields[0].values[0].value;
-                        let addtask = {...item, custom_fields: [{id: name._embedded.items[0].id , name: 'Заказчик', values: [{ value: name._embedded.items[0].name } ] }, {name: 'Ссылка на креотивы', values: [{ value: link }] }, ...item.custom_fields ], replacements: true }
+                        let customer = {id: item.contacts.id[0], name: 'Заказчик', values: [{ value: name._embedded.items[0].name } ] };
+                        let linToCreo = {name: 'Ссылка на креотивы', values: [{ value: link }] };
+                        item.custom_fields.push(customer);
+                        item.custom_fields.push(linToCreo);
+                        item.replacements = true;
+                        //let addtask = {...item, custom_fields: [{id: item.contacts.id[0], name: 'Заказчик', values: [{ value: name._embedded.items[0].name } ] }, {name: 'Ссылка на креотивы', values: [{ value: link }] }, ...item.custom_fields ] };
+                        let addtask = item;
                         return addtask;
                     })
                     .then(addtask => {
@@ -138,7 +151,12 @@ Tasks.find({}, (err, doc) => {
                       .get(item.contacts._links.self.href)
                       .then( name => {
                           let link = !name._embedded.items[0].custom_fields[0] ? 'ссылка отсутствует' : name._embedded.items[0].custom_fields[0].values[0].value;
-                          let addtask = {...item, custom_fields: [{id: name._embedded.items[0].id , name: 'Заказчик', values: [{ value: name._embedded.items[0].name } ] }, {name: 'Ссылка на креотивы', values: [{ value: link }] }, ...item.custom_fields ], replacements: true }
+                          let customer = {id: item.contacts.id[0], name: 'Заказчик', values: [{ value: name._embedded.items[0].name } ] };
+                          let linToCreo = {name: 'Ссылка на креотивы', values: [{ value: link }] };
+                          item.custom_fields.push(customer);
+                          item.custom_fields.push(linToCreo);
+                          //let addtask = {...item, custom_fields: [{id: item.contacts.id[0], name: 'Заказчик', values: [{ value: name._embedded.items[0].name } ] }, {name: 'Ссылка на креотивы', values: [{ value: link }] }, ...item.custom_fields ] };
+                          let addtask = item;
                           return addtask;
                       })
                       .then(addtask => {
@@ -187,7 +205,12 @@ Tasks.find({}, (err, doc) => {
                             .get(item.contacts._links.self.href)
                             .then( name => {
                                 let link = !name._embedded.items[0].custom_fields[0] ? 'ссылка отсутствует' : name._embedded.items[0].custom_fields[0].values[0].value;
-                                let addtask = {...item, custom_fields: [{id: name._embedded.items[0].id , name: 'Заказчик', values: [{ value: name._embedded.items[0].name } ] }, {name: 'Ссылка на креотивы', values: [{ value: link }] }, ...item.custom_fields ], replacements: true }
+                                let customer = {id: item.contacts.id[0], name: 'Заказчик', values: [{ value: name._embedded.items[0].name } ] };
+                                let linToCreo = {name: 'Ссылка на креотивы', values: [{ value: link }] };
+                                item.custom_fields.push(customer);
+                                item.custom_fields.push(linToCreo);
+                                //let addtask = {...item, custom_fields: [{id: item.contacts.id[0], name: 'Заказчик', values: [{ value: name._embedded.items[0].name } ] }, {name: 'Ссылка на креотивы', values: [{ value: link }] }, ...item.custom_fields ] };
+                                let addtask = item;
                                 return addtask;
                             })
                             .then(addtask => {

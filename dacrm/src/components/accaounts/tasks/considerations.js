@@ -11,7 +11,7 @@ export default class ConsList extends React.Component {
         <li className={`list__string${item.replacements ? ' repl' : ''} list-group-item`} key={key}>
             {createWorksList(item.custom_fields, ['Заказчик', 'Тип крефтивов', 'Количество крео', 'Ссылка на креотивы', 'Замены', 'ТЗ'])}
             <form className="consForm"  onSubmit={(e) => { e.preventDefault(); this.props.submit( {task: item, id: localStorage.getItem('user').slice(1, -1), url: 'status', token: localStorage.getItem('token') } ) } }>
-            <span className="consForm__comment">ТЗ на разработку:</span>
+            <div className="consForm__comment">ТЗ на разработку:</div>
                 <div className="consForm__data form-group">
                     <label className="consForm__field">
                         <textarea rows="5" className="com-field form-control" onChange={(e) => {item.comment_task = e.target.value}} name="text"></textarea>

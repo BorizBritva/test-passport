@@ -110,6 +110,37 @@ router.post('/get-tasks/tocheck', auth, (req, res) => {
 
 })
 
+router.post('/get-tasks/revs', auth, (req, res) => {
+    let admin = req.body.task.resp_id;
+    let editor = req.body.task.editor;
+    let task = req.body.task;
+
+    Admin.findOne({_id: admin}, (err, doc) => {
+        if (err) return;
+        doc.tasks.edits.forEach((item, i) => {
+            if (item.id == task.id) {
+                doc.tasks.edits.splice(i, 1)
+            }
+        })
+        doc.tasks.check.push(task);
+        doc.save();
+    })
+
+    Editor.findOne({_id: editor}, (err, doc) => {
+        if (err) return;
+        doc.tasks.completion.forEach((item, i) => {
+            if (item.id == task.id) {
+                doc.tasks.completion.splice(i, 1)
+            }
+        })
+        doc.tasks.inChecks.push(task);
+        doc.save();
+        res.send(doc.tasks)
+    })
+
+
+})
+
 /*router.post('/login', (req, res) => {
   const login = req.body.login;
   const password = req.body.password;

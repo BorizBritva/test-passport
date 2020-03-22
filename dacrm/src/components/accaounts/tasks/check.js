@@ -10,8 +10,8 @@ export default class CheckList extends React.Component {
         <li className={`list__string${item.replacements ? ' repl' : ''} list-group-item`} key={key}>
           {createWorksList(item.custom_fields, ['Заказчик', 'Тип крефтивов', 'Количество крео', 'Ссылка на креотивы', 'Замены', 'ТЗ', 'Editor'])}
           <div className="list-butn-wrap">
-              <input className="list__button btn btn-primary" type="button" value="На доработку" onClick={() => { this.props.revision(item) } }/>
-              <input className="list__button btn btn-primary" type="button" value="Принять" onClick={() => { this.props.toAccept(item) } }/>
+              <input className="list__button btn btn-primary" type="button" value="На доработку" onClick={() => { this.props.submit({id: localStorage.getItem('user').slice(1, -1), token: localStorage.getItem('token'), task: item, url: 'revs'}) }}/>
+              <input className="list__button btn btn-success" type="button" value="Принять" onClick={() => {  this.props.submit({id: localStorage.getItem('user').slice(1, -1), token: localStorage.getItem('token'), task: item, url: 'accept'})  } }/>
           </div>
         </li>
       )
