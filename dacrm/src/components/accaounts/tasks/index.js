@@ -7,6 +7,7 @@ import submitTask from '../../../actions/AdminTask';
 import WorksList from './works';
 import ConsList from './considerations';
 import StatusList from './status';
+import CheckList from './check';
 
 const mapStateProps = state => {
     return {
@@ -34,6 +35,7 @@ class Tasks extends React.Component {
                 <WorksList works={this.props.tasks.works} submit={this.props.submitTask}/>
                 <ConsList cons={this.props.tasks.considerations} users={this.props.tasks.editors} submit={this.props.submitTask}/>
                 <StatusList works={this.props.tasks.status}/>
+                <CheckList works={this.props.tasks.check} />
             </div>
         )
     }

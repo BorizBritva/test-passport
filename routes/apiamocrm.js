@@ -40,6 +40,7 @@ Tasks.find({}, (err, doc) => {
                     .get(item.contacts._links.self.href)
                     .then( name => {
                         //name._embedded.items[0].custom_fields[0].values[0].value
+                        
                         let link = !name._embedded.items[0].custom_fields[0] ? 'ссылка отсутствует' : name._embedded.items[0].custom_fields[0].values[0].value;
                         let addtask = {...item, custom_fields: [{id: item.contacts.id[0], name: 'Заказчик', values: [{ value: name._embedded.items[0].name } ] }, {name: 'Ссылка на креотивы', values: [{ value: link }] }, ...item.custom_fields ] };
                         return addtask;

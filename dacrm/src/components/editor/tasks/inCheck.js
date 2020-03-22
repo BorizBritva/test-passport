@@ -1,17 +1,16 @@
 import React from 'react';
 import createWorksList from '../../../helpers/createWorksList';
 
-export default class CheckList extends React.Component {
+export default class InCheck extends React.Component {
 
   showWorksList() {
     if (this.props.works)
     return this.props.works.map( ( item, key ) => {
       return (
         <li className={`list__string${item.replacements ? ' repl' : ''} list-group-item`} key={key}>
-          {createWorksList(item.custom_fields, ['Заказчик', 'Тип крефтивов', 'Количество крео', 'Ссылка на креотивы', 'Замены', 'ТЗ', 'Editor'])}
+          {createWorksList(item.custom_fields, ['Заказчик', 'Количество крео', 'ГЕО', 'Аккаунт'])}
           <div className="list-butn-wrap">
-              <input className="list__button btn btn-primary" type="button" value="На доработку" onClick={() => { this.props.revision(item) } }/>
-              <input className="list__button btn btn-primary" type="button" value="Принять" onClick={() => { this.props.toAccept(item) } }/>
+              <div className="list__button btn btn-primary">На проверке</div>
           </div>
         </li>
       )
@@ -20,10 +19,12 @@ export default class CheckList extends React.Component {
 
   render() {
     return (
+      <>
         <ul className="works__list list-group col-md-2 col-lg-2">
           <span className="list__name list-group-item list-group-item-dark">Проверка</span>
           {this.showWorksList()}
         </ul>
+      </>
     )
   }
 }

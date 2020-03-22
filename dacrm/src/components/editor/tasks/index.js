@@ -4,6 +4,8 @@ import { bindActionCreators } from 'redux';
 import getTasks from '../../../actions/getUserTask';
 import submitTask from '../../../actions/EditorTask';
 import WorksList from './works';
+import InWorks from './inWorks';
+import InCheck from './inCheck';
 
 const mapStateProps = state => {
     return {
@@ -28,6 +30,8 @@ class Tasks extends React.Component {
         return(
             <div className="works__wrap">
                 <WorksList works={this.props.tasks.allTask} submit={this.props.submitTask}/>
+                <InWorks works={this.props.tasks.inWorks} submit={this.props.submitTask}/>
+                <InCheck works={this.props.tasks.inChecks}/>
             </div>
         )
     }
