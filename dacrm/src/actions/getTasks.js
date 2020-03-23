@@ -1,6 +1,10 @@
 export default function getTasks(data) {
     return (dispatch, getState) => {
 
+        if (!data.id) {
+          return window.location.assign(`${window.location.origin}/auth`);
+        }
+
         fetch(`/admin/get-tasks`, {
           method: "POST",
           headers: new Headers({

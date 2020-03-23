@@ -1,6 +1,10 @@
 export default function submitTask( data) {
     return (dispatch, getState) => {
 
+        if (!data.id) {
+          return window.location.assign(`${window.location.origin}/auth`);
+        }
+        
         fetch(`/editor/get-tasks/${data.url}`, {
             method: "POST",
             headers: new Headers({
@@ -15,7 +19,6 @@ export default function submitTask( data) {
                 if (response.ok) {
                     response.json()
                         .then( tasks => {
-                            //console.log(tasks);
                             dispatch({
                                 type: "GET_USER_TASKS",
                                 payload: tasks

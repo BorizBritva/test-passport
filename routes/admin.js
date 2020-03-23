@@ -195,9 +195,35 @@ router.post('/get-tasks/accept', auth, (req, res) => {
                 doc.tasks.final.push(task);
                 doc.save();
                 res.send({...doc.tasks, editors: doc.editors})
-            })            
+            })
+
+            Tasks.findOne({}, (err, doc) => {
+              if (err) return;
+              task.time__final = Date.now();
+              doc.oldTasks.push(task);
+              doc.save();
+            })
 
             AmoCRM.request
+                .post( '/api/v2/leads', {
+                    update: [
+                        {
+                            id: task.id,
+                            status_id: 31945801,
+                            updated_at: Date.now(),
+                            name: task.name,
+                            // другие поля ...
+                        }
+                    ]
+                })
+                .then( data => {
+                    return;
+                })
+                .catch( e => {
+                    return;
+                })
+
+            /*AmoCRM.request
                 .post( '/api/v2/leads', {
                     update: [
                         {
@@ -221,22 +247,17 @@ router.post('/get-tasks/accept', auth, (req, res) => {
                     ]
                 })
                 .then( data => {
-                    console.log( 'Полученные данные', data._embedded.items );
+                    return;
                 })
                 .catch( e => {
-                    console.log( 'Произошла ошибка создания контакта', e );
-                })
+                    return;
+                })*/
 
         })
         .catch(err => {
             return
         })
 
-})
-
-
-router.get('/dashboard', passport.authenticate('jwt', {session: false}), (req, res) => {
-  res.send({test: 'Test'});
 })
 
 module.exports = router;

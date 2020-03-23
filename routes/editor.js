@@ -6,6 +6,7 @@ const auth = jwt({
   secret: secret.secret,
   userProperty: 'user'
 });
+const AmoCRM = require('../routes/apiamocrm');
 const Editor = require('../models/editor/model');
 const Admin = require('../models/admin/model');
 const passport = require('passport');
@@ -14,6 +15,10 @@ const passport = require('passport');
 router.post('/addeditor', (req, res) => {
 
   let {login, password, name, phone} = req.body;
+
+  if (login.lenght==0 || password.length==0) {
+    res.send({error: 'Required fields are not filled'});
+  }
 
   Editor.findOne({login: login}, (err, doc) => {
     if (doc != null && doc.login === login) {
@@ -59,7 +64,64 @@ router.post('/get-tasks/takework', auth, (req, res) => {
     let editor = req.body.task.editor;
     let task = req.body.task;
 
-    Admin.findOne({_id: admin}, (err, doc) => {
+    Promise.all([Admin.findOne({_id: admin}), Editor.findOne({_id: editor})])
+        .then(data => {
+
+          Admin.findOne({_id: admin}, (err, doc) => {
+              if (err) return;
+              doc.tasks.status.push(task);
+              doc.save();
+          })
+
+          Editor.findOne({_id: editor}, (err, doc) => {
+              if (err) return;
+              doc.tasks.allTask.forEach((item, i) => {
+                  if (item.id == task.id) {
+                      doc.tasks.allTask.splice(i, 1)
+                  }
+              })
+              doc.tasks.inWorks.push(task);
+              doc.save();
+              res.send(doc.tasks)
+          })
+
+            AmoCRM.request
+                .post( '/api/v2/leads', {
+                    update: [
+                        {
+                            id: task.id,
+                            status_id: 28958398,
+                            updated_at: Date.now(),
+                            name: task.name,
+                            custom_fields: [{
+                              id: 640185,
+                              values: [{
+                                value: data[0].name
+                              }]
+                            }, {
+                              id: 640187,
+                              values: [{
+                                value: data[1].name
+                              }]
+                            }]
+                            // другие поля ...
+                        }
+                    ]
+                })
+                .then( data => {
+                    return;
+                })
+                .catch( e => {
+                    return;
+                })
+
+        })
+        .catch(err => {
+            return
+        })
+
+
+    /*Admin.findOne({_id: admin}, (err, doc) => {
         if (err) return;
         doc.tasks.status.push(task);
         doc.save();
@@ -75,7 +137,7 @@ router.post('/get-tasks/takework', auth, (req, res) => {
         doc.tasks.inWorks.push(task);
         doc.save();
         res.send(doc.tasks)
-    })
+    })*/
 
 })
 

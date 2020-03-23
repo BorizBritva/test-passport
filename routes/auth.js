@@ -7,6 +7,9 @@ const passport = require('passport');
 router.post('/login', (req, res) => {
   const login = req.body.login;
   const password = req.body.password;
+  if (login.length==0 || password.length==0) {
+    return;
+  }
 
   passport.authenticate('local', (err, user, info) => {
 

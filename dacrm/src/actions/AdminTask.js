@@ -1,6 +1,10 @@
 export default function submitTask( data) {
     return (dispatch, getState) => {
 
+        if (!data.id) {
+          return window.location.assign(`${window.location.origin}/auth`);
+        }
+        
         fetch(`/admin/get-tasks/${data.url}`, {
             method: "POST",
             headers: new Headers({

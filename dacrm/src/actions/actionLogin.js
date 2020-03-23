@@ -3,7 +3,7 @@ const submitLogin = (e, loginData) => {
         e.preventDefault();
         //const { login, password } = loginData;
 
-        fetch('/login', {
+        fetch('/crm/login', {
           method: "POST",
           headers: new Headers({
             Accept: 'application/json',

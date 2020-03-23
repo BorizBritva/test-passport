@@ -27,7 +27,7 @@ const mapDispatchToProps = dispatch => {
 class Tasks extends React.Component {
 
     componentDidMount() {
-        this.interval = setInterval(() => { this.props.getTasks({id: localStorage.getItem('user'), token: localStorage.getItem('token')}) }, 3000);
+        this.interval = setInterval(() => { this.props.getTasks({id: localStorage.getItem('user'), token: localStorage.getItem('token')}) }, 1000);
     }
 
     componentWillUnmount() {
