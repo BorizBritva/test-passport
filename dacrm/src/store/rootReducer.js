@@ -17,6 +17,9 @@ export default function rootReducers ( state = initialState, action ) {
         case  'ERROR':
             return { ...state, error: action.payload };
         break;
+        case 'ADD_USER':
+            return {...state, message: action.payload};
+        break;
         case 'CHANGE_MENU':
             return {...state, sidebarType: action.payload};
         break;

@@ -1,10 +1,13 @@
+import exit from '../helpers/exit';
+
 export default function submitTask( data) {
+
+    if (!data.token) {
+        exit();
+    }
+    
     return (dispatch, getState) => {
 
-        if (!data.id) {
-          return window.location.assign(`${window.location.origin}/auth`);
-        }
-        
         fetch(`/admin/get-tasks/${data.url}`, {
             method: "POST",
             headers: new Headers({
@@ -19,7 +22,7 @@ export default function submitTask( data) {
                 if (response.ok) {
                     response.json()
                         .then( tasks => {
-
+                            console.log(tasks)
                             dispatch({
                                 type: "GET_ACCOUNT_TASKS",
                                 payload: tasks

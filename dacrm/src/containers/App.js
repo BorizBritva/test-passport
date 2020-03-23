@@ -21,6 +21,7 @@ const mapStateProps = state => {
         name: state.name,
         phone: state.phone,
         error: state.error,
+        message: state.message
     }
 }
 
@@ -50,6 +51,7 @@ class App extends React.Component {
                                            inputName={this.props.inputName}
                                            inputPhone={this.props.inputPhone}
                                            submit={this.props.registration}
+                                           mes={this.props.message}
                   />
                   <Route path="/auth" exact render={() => <Login login={this.props.login}
                                                                  password={this.props.password}

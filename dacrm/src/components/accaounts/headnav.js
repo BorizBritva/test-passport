@@ -18,7 +18,7 @@ const AdminHeader = (props) => {
             <li className="header__button button_bell">
               <FontAwesomeIcon icon="bell" />
             </li>
-            <li className="header__button button_logout" onClick={props.exit}>
+            <li className="header__button button_logout"  onClick={props.exit}>
               <FontAwesomeIcon icon="sign-out-alt" />
             </li>
           </ul>

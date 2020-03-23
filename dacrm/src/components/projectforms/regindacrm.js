@@ -2,7 +2,11 @@ import React, {Fragment} from 'react';
 import Header from '../header';
 
 export default class RegForm extends React.Component {
+
     render() {
+
+        const message = (mess) => { if (mess && mess.length > 0) { return <div className="alert alert-info" role="alert">{mess}</div> } }
+
         return(
           <>
           <Header />
@@ -38,6 +42,9 @@ export default class RegForm extends React.Component {
                 </label>
                 <div className="form__button-wrap">
                   <input type="submit" className="btn btn-primary btn-lg btn-block" value="Зарегистрироваться" />
+                </div>
+                <div className="login_error">
+                  {message(this.props.mes)}
                 </div>
            </form>
           </div>

@@ -1,9 +1,12 @@
-export default function getTasks(data) {
-    return (dispatch, getState) => {
+import exit from '../helpers/exit';
 
-        if (!data.id) {
-          return window.location.assign(`${window.location.origin}/auth`);
-        }
+export default function getTasks(data) {
+
+    if (!data.token) {
+        exit();
+    }
+
+    return (dispatch, getState) => {
 
         fetch(`/admin/get-tasks`, {
           method: "POST",

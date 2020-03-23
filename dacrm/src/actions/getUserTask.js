@@ -1,4 +1,11 @@
+import exit from '../helpers/exit';
+
 export default function getTasks(data) {
+
+    if (!data.token) {
+        exit();
+    }
+
     return (dispatch, getState) => {
 
         fetch(`/editor/get-tasks`, {
@@ -15,7 +22,7 @@ export default function getTasks(data) {
                 if (response.ok) {
                     response.json()
                         .then( tasks => {
-                          
+                            if (tasks.error) exit();
                             dispatch({
                                 type: "GET_USER_TASKS",
                                 payload: tasks

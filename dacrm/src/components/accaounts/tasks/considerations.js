@@ -9,12 +9,8 @@ export default class ConsList extends React.Component {
     return this.props.cons.map( ( item, key ) => {
       return (
         <li className={`list__string${item.replacements ? ' repl' : ''} list-group-item`} key={key}>
-            <div className="inworks-content">
-                <span className="content__name">ID:</span>
-                <span className="content__value">{item.id}</span>
-            </div>
             {createWorksList(item.custom_fields, ['Заказчик', 'Тип крефтивов', 'Количество крео', 'Ссылка на креотивы', 'Замены', 'ТЗ'])}
-            <form className="consForm"  onSubmit={(e) => { e.preventDefault(); this.props.submit( {task: item, id: localStorage.getItem('user').slice(1, -1), url: 'status', token: localStorage.getItem('token') } ) } }>
+            <form className="consForm">
             <div className="consForm__comment">ТЗ на разработку:</div>
                 <div className="consForm__data form-group">
                     <label className="consForm__field">
@@ -33,8 +29,8 @@ export default class ConsList extends React.Component {
                         </select>
                     </div>
                     <div className="consForm__button worksButtonWrap">
-                        <input className="list__button btn btn-primary" type="submit" value="Назначить"/>
-                        <input className="list__button btn btn-primary" type="button" value="Отменить" onClick={() => this.props.submit( {task: item, id: localStorage.getItem('user').slice(1, -1), url: 'cancel', token: localStorage.getItem('token') } ) }/>
+                        <input className="list__button btn btn-primary" type="button" value="Назначить" onClick={() => { this.props.submit( {task: item, id: localStorage.getItem('user').slice(1, -1), url: 'status', token: localStorage.getItem('token') } ) } }/>
+                        <input className="list__button btn btn-primary" type="button" value="Отменить"/>
                     </div>
                 </div>
              </form>

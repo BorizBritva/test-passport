@@ -109,27 +109,6 @@ router.post('/get-tasks/status', auth, (req, res) => {
 
 })
 
-router.post('/get-tasks/cancel', auth, (req, res) => {
-  let admin = req.body.user.toString();
-  let task = req.body.task;
-
-  Admin.findOne({_id: admin}, (err, doc) => {
-    if (err) return;
-
-    doc.tasks.considerations.forEach((item, i) => {
-        if (item.id == task.id) {
-            doc.tasks.considerations.splice(i, 1)
-        }
-    })
-
-    doc.tasks.works.push(task);
-    doc.save()
-    res.send({...doc.tasks, editors: doc.editors})
-
-  })
-
-})
-
 router.post('/get-tasks/revs', auth, (req, res) => {
     let admin = req.body.user.toString();
     let task = req.body.task;
@@ -174,6 +153,8 @@ router.post('/get-tasks/accept', auth, (req, res) => {
     Promise.all([Admin.findOne({_id: admin}), Editor.findOne({_id: editor})])
         .then(data => {
 
+            console.log(task.id,data[0].name, data[1].name)
+
             Editor.findOne({_id: editor}, (err, doc) => {
                 if (err) return;
                 doc.tasks.inChecks.forEach((item, i) => {
@@ -197,67 +178,16 @@ router.post('/get-tasks/accept', auth, (req, res) => {
                 res.send({...doc.tasks, editors: doc.editors})
             })
 
-            Tasks.findOne({}, (err, doc) => {
-              if (err) return;
-              task.time__final = Date.now();
-              doc.oldTasks.push(task);
-              doc.save();
-            })
-
-            AmoCRM.request
-                .post( '/api/v2/leads', {
-                    update: [
-                        {
-                            id: task.id,
-                            status_id: 31945801,
-                            updated_at: Date.now(),
-                            name: task.name,
-                            // другие поля ...
-                        }
-                    ]
-                })
-                .then( data => {
-                    return;
-                })
-                .catch( e => {
-                    return;
-                })
-
-            /*AmoCRM.request
-                .post( '/api/v2/leads', {
-                    update: [
-                        {
-                            id: task.id,
-                            status_id: 28958398,
-                            updated_at: Date.now(),
-                            name: task.name,
-                            custom_fields: [{
-                              id: 640185,
-                              values: [{
-                                value: data[0].name
-                              }]
-                            }, {
-                              id: 640187,
-                              values: [{
-                                value: data[1].name
-                              }]
-                            }]
-                            // другие поля ...
-                        }
-                    ]
-                })
-                .then( data => {
-                    return;
-                })
-                .catch( e => {
-                    return;
-                })*/
-
         })
         .catch(err => {
             return
         })
 
+})
+
+
+router.get('/dashboard', passport.authenticate('jwt', {session: false}), (req, res) => {
+  res.send({test: 'Test'});
 })
 
 module.exports = router;

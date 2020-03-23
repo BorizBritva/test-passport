@@ -4,6 +4,7 @@ const initialState = {
     name: '',
     phone: '',
     error: '',
+    message: '',
     sidebarType: '',
     accaunTasks: [],
     editorTasks: []

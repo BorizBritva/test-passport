@@ -15,6 +15,7 @@ export default class WorksList extends React.Component {
           </div>
           <div className="list-butn-wrap">
               <input className="list__button btn btn-primary" type="button" value="Взять в работу" onClick={() => { this.props.submit({id: localStorage.getItem('user').slice(1, -1), token: localStorage.getItem('token'), task: item, url: 'takework'}) }}/>
+              <input className="list__button btn btn-primary" type="button" value="Вернуть" onClick={() => { this.props.submit({id: localStorage.getItem('user').slice(1, -1), token: localStorage.getItem('token'), task: item, url: 'back'}) }}/>
           </div>
         </li>
       )

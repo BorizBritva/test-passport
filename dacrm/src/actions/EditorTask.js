@@ -1,10 +1,13 @@
+import exit from '../helpers/exit';
+
 export default function submitTask( data) {
+
+    if (!data.token) {
+        exit();
+    }
+
     return (dispatch, getState) => {
 
-        if (!data.id) {
-          return window.location.assign(`${window.location.origin}/auth`);
-        }
-        
         fetch(`/editor/get-tasks/${data.url}`, {
             method: "POST",
             headers: new Headers({
@@ -19,6 +22,8 @@ export default function submitTask( data) {
                 if (response.ok) {
                     response.json()
                         .then( tasks => {
+                            if (tasks.error) exit();
+                            //console.log(tasks);
                             dispatch({
                                 type: "GET_USER_TASKS",
                                 payload: tasks

@@ -3,7 +3,7 @@ const submitLogin = (e, loginData) => {
         e.preventDefault();
         //const { login, password } = loginData;
 
-        fetch('/crm/login', {
+        fetch('/login', {
           method: "POST",
           headers: new Headers({
             Accept: 'application/json',
@@ -56,7 +56,10 @@ const registration = (e, regData) => {
           if (response.ok) {
             response.json()
               .then( data => {
-                  console.log(data)
+                  dispatch({
+                      type: "ADD_USER",
+                      payload: data.message,
+                  })
               })
           }
       })
