@@ -30,7 +30,7 @@ export default class ConsList extends React.Component {
                     </div>
                     <div className="consForm__button worksButtonWrap">
                         <input className="list__button btn btn-primary" type="submit" value="Назначить"/>
-                        <input className="list__button btn btn-primary" type="button" value="Отменить"/>
+                        <input className="list__button btn btn-primary" type="button" value="Отменить" onClick={() => this.props.submit( {task: item, id: localStorage.getItem('user').slice(1, -1), url: 'cancel', token: localStorage.getItem('token') } ) }/>
                     </div>
                 </div>
              </form>

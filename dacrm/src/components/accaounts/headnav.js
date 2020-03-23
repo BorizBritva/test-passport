@@ -7,7 +7,7 @@ import { fab } from '@fortawesome/free-brands-svg-icons'
 
 library.add(fas, fab)
 
-const AdminHeader = () => {
+const AdminHeader = (props) => {
   return (
       <div className="header-wrap">
         <nav className="header-nav">
@@ -18,7 +18,7 @@ const AdminHeader = () => {
             <li className="header__button button_bell">
               <FontAwesomeIcon icon="bell" />
             </li>
-            <li className="header__button button_logout">
+            <li className="header__button button_logout" onClick={props.exit}>
               <FontAwesomeIcon icon="sign-out-alt" />
             </li>
           </ul>

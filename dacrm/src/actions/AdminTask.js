@@ -15,7 +15,7 @@ export default function submitTask( data) {
                 if (response.ok) {
                     response.json()
                         .then( tasks => {
-                            console.log(tasks)
+
                             dispatch({
                                 type: "GET_ACCOUNT_TASKS",
                                 payload: tasks

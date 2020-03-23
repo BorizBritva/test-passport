@@ -6,6 +6,7 @@ const tasksSchema = new Schema({
   id: Number,
   name: String,
   amoTasks: Array,
+  oldTasks: Array,
 })
 
 const Tasks = mongoose.model('Tasks', tasksSchema);

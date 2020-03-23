@@ -15,7 +15,7 @@ export default function getTasks(data) {
                 if (response.ok) {
                     response.json()
                         .then( tasks => {
-                            console.log(tasks);
+                          
                             dispatch({
                                 type: "GET_USER_TASKS",
                                 payload: tasks

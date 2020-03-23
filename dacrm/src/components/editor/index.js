@@ -9,6 +9,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import changeSdb from '../../actions/sidebar';
+import exit from '../../helpers/exit';
 
 const mapStateProps = state => {
     return {
@@ -38,7 +39,7 @@ class Editor extends React.Component {
                 <div className="row all__content">
                 <SideBar homePage='home' taskPage='tasks' infoCard='info' changeComponent={this.props.changeSdb}/>
                 <main className="main-content p-0 col-sm-12 col-md-9 col-lg-10">
-                  <EditorHeader />
+                  <EditorHeader exit={exit}/>
                   {this.showComponent()}
                 </main>
                 </div>

@@ -109,6 +109,27 @@ router.post('/get-tasks/status', auth, (req, res) => {
 
 })
 
+router.post('/get-tasks/cancel', auth, (req, res) => {
+  let admin = req.body.user.toString();
+  let task = req.body.task;
+
+  Admin.findOne({_id: admin}, (err, doc) => {
+    if (err) return;
+
+    doc.tasks.considerations.forEach((item, i) => {
+        if (item.id == task.id) {
+            doc.tasks.considerations.splice(i, 1)
+        }
+    })
+
+    doc.tasks.works.push(task);
+    doc.save()
+    res.send({...doc.tasks, editors: doc.editors})
+
+  })
+
+})
+
 router.post('/get-tasks/revs', auth, (req, res) => {
     let admin = req.body.user.toString();
     let task = req.body.task;
@@ -153,8 +174,6 @@ router.post('/get-tasks/accept', auth, (req, res) => {
     Promise.all([Admin.findOne({_id: admin}), Editor.findOne({_id: editor})])
         .then(data => {
 
-            console.log(task.id,data[0].name, data[1].name)
-
             Editor.findOne({_id: editor}, (err, doc) => {
                 if (err) return;
                 doc.tasks.inChecks.forEach((item, i) => {
@@ -176,7 +195,7 @@ router.post('/get-tasks/accept', auth, (req, res) => {
                 doc.tasks.final.push(task);
                 doc.save();
                 res.send({...doc.tasks, editors: doc.editors})
-            })
+            })            
 
             AmoCRM.request
                 .post( '/api/v2/leads', {

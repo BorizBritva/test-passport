@@ -131,7 +131,7 @@ Tasks.find({}, (err, doc) => {
 
     })
 //
-/*const updateTask = () => {
+const updateTask = () => {
     let newTask = [];
     AmoCRM.request
         .get( '/api/v2/leads?status=28958392' )
@@ -227,7 +227,7 @@ Tasks.find({}, (err, doc) => {
                                 Admin.find({}, (err, admins) => {
                                     if (err) return;
                                     admins.forEach(item => {
-                                        if (!item.tasks.works.fin(item => item.id == addtask.id)) item.tasks.works.push(addtask);
+                                        if (!item.tasks.works.find(item => item.id == addtask.id)) item.tasks.works.push(addtask);
                                         item.save();
                                     })
                                 })
@@ -243,6 +243,6 @@ Tasks.find({}, (err, doc) => {
         })
 }
 
-setInterval(() => updateTask(), 1000);*/
+setInterval(() => updateTask(), 5000);
 
 module.exports = AmoCRM;

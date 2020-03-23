@@ -27,11 +27,18 @@ const mapDispatchToProps = dispatch => {
 class Tasks extends React.Component {
 
     componentDidMount() {
-        this.props.getTasks({id: localStorage.getItem('user'), token: localStorage.getItem('token')})
+        this.interval = setInterval(() => { this.props.getTasks({id: localStorage.getItem('user'), token: localStorage.getItem('token')}) }, 3000);
     }
 
+    componentWillUnmount() {
+        clearInterval(this.interval);
+    }
+
+    /*componentDidMount() {
+        this.props.getTasks({id: localStorage.getItem('user'), token: localStorage.getItem('token')})
+    }*/
+
     render() {
-        console.log(this.props.tasks);
         return(
             <div className="works__wrap">
                 <WorksList works={this.props.tasks.works} submit={this.props.submitTask}/>
