@@ -36,11 +36,11 @@ async function startServer() {
         app.use('/admin', require('./routes/admin'));
 
         app.use(passport.initialize());
-        app.use(passport.session());
+        //app.use(passport.session());
 
         app.use((err, req, res, next) => {
           if (err.name === 'UnauthorizedError') {
-            res.send({error: 'error'})
+            return res.send({error: 'error'})
           }
         })
         //require('./config/passportCrm')(passport);

@@ -47,11 +47,11 @@ router.post('/addadmin', (req, res) => {
   })
 })
 
-router.post('/get-tasks', auth, (req, res) => {
+router.post('/get-task', auth, (req, res) => {
     let admin = req.body.id.toString().slice(1, -1);
     Admin.findOne({_id: admin}, (err, doc) => {
         if (err) return;
-        res.send({...doc.tasks, editors: doc.editors})
+        return res.send({...doc.tasks, editors: doc.editors})
     })
 })
 
@@ -67,6 +67,23 @@ router.post('/get-tasks/cons', auth, (req, res) => {
             }
         })
         doc.tasks.considerations.push(task);
+        doc.save();
+        res.send({...doc.tasks, editors: doc.editors})
+    })
+})
+
+router.post('/get-tasks/toback', auth, (req, res) => {
+    let admin = req.body.user.toString();
+    let task = req.body.task;
+
+    Admin.findOne({_id: admin}, (err, doc) => {
+        if (err) return;
+        doc.tasks.considerations.forEach((item, i) => {
+            if (item.id == task.id) {
+                doc.tasks.considerations.splice(i, 1)
+            }
+        })
+        doc.tasks.works.push(task);
         doc.save();
         res.send({...doc.tasks, editors: doc.editors})
     })
@@ -216,7 +233,7 @@ router.post('/get-tasks/accept', auth, (req, res) => {
                       doc.oldTasks.push(task);
                     }
                 })
-                
+
               }
 
               doc.save();
@@ -228,11 +245,6 @@ router.post('/get-tasks/accept', auth, (req, res) => {
             return
         })
 
-})
-
-
-router.get('/dashboard', passport.authenticate('jwt', {session: false}), (req, res) => {
-  res.send({test: 'Test'});
 })
 
 module.exports = router;

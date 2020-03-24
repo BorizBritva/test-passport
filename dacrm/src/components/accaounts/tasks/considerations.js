@@ -9,6 +9,10 @@ export default class ConsList extends React.Component {
     return this.props.cons.map( ( item, key ) => {
       return (
         <li className={`list__string${item.replacements ? ' repl' : ''} list-group-item`} key={key}>
+        <div className="inworks-content">
+            <span className="content__name">ID:</span>
+            <span className="content__value">{item.id}</span>
+        </div>
             {createWorksList(item.custom_fields, ['Заказчик', 'Тип крефтивов', 'Количество крео', 'Ссылка на креотивы', 'Замены', 'ТЗ'])}
             <form className="consForm">
             <div className="consForm__comment">ТЗ на разработку:</div>
@@ -30,7 +34,7 @@ export default class ConsList extends React.Component {
                     </div>
                     <div className="consForm__button worksButtonWrap">
                         <input className="list__button btn btn-primary" type="button" value="Назначить" onClick={() => { this.props.submit( {task: item, id: localStorage.getItem('user').slice(1, -1), url: 'status', token: localStorage.getItem('token') } ) } }/>
-                        <input className="list__button btn btn-primary" type="button" value="Отменить"/>
+                        <input className="list__button btn btn-primary" type="button" value="Отменить" onClick={() => { this.props.submit( {task: item, id: localStorage.getItem('user').slice(1, -1), url: 'toback', token: localStorage.getItem('token') } ) } }/>
                     </div>
                 </div>
              </form>

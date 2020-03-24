@@ -8,6 +8,10 @@ export default class FinalList extends React.Component {
     return this.props.works.map( ( item, key ) => {
       return (
         <li className={`list__string${item.replacements ? ' repl' : ''} list-group-item`} key={key}>
+        <div className="inworks-content">
+            <span className="content__name">ID:</span>
+            <span className="content__value">{item.id}</span>
+        </div>
           {createWorksList(item.custom_fields, ['Заказчик', 'Тип крефтивов', 'Количество крео', 'Ссылка на креотивы', 'Замены', 'ТЗ', 'Editor'])}
           <div className="list-butn-wrap">
                 <div className="list__button btn btn-success">Принято</div>

@@ -8,7 +8,7 @@ export default function getTasks(data) {
 
     return (dispatch, getState) => {
 
-        fetch(`/admin/get-tasks`, {
+        fetch(`/admin/get-task`, {
           method: "POST",
           headers: new Headers({
             Accept: 'application/json',
@@ -28,7 +28,7 @@ export default function getTasks(data) {
                             dispatch({
                                 type: "GET_ACCOUNT_TASKS",
                                 payload: tasks
-                            });  
+                            });
                           }
                         })
                 }

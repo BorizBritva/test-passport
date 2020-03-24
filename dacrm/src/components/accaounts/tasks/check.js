@@ -8,6 +8,10 @@ export default class CheckList extends React.Component {
     return this.props.works.map( ( item, key ) => {
       return (
         <li className={`list__string${item.replacements ? ' repl' : ''} list-group-item`} key={key}>
+        <div className="inworks-content">
+            <span className="content__name">ID:</span>
+            <span className="content__value">{item.id}</span>
+        </div>
           {createWorksList(item.custom_fields, ['Заказчик', 'Тип крефтивов', 'Количество крео', 'Ссылка на креотивы', 'Замены', 'ТЗ', 'Editor'])}
           <div className="list-butn-wrap">
               <input className="list__button btn btn-primary" type="button" value="На доработку" onClick={() => { this.props.submit({id: localStorage.getItem('user').slice(1, -1), token: localStorage.getItem('token'), task: item, url: 'revs'}) }}/>
