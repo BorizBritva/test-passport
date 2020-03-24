@@ -22,11 +22,15 @@ export default function getTasks(data) {
                 if (response.ok) {
                     response.json()
                         .then( tasks => {
-                            if (tasks.error) exit();
-                            dispatch({
-                                type: "GET_USER_TASKS",
-                                payload: tasks
-                            });
+                            if (tasks.error) {
+                              exit()
+                            } else {
+                              dispatch({
+                                  type: "GET_USER_TASKS",
+                                  payload: tasks
+                              });                            
+                            }
+
                         })
                 }
             })

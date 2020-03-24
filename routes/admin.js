@@ -153,8 +153,6 @@ router.post('/get-tasks/accept', auth, (req, res) => {
     Promise.all([Admin.findOne({_id: admin}), Editor.findOne({_id: editor})])
         .then(data => {
 
-            console.log(task.id,data[0].name, data[1].name)
-
             Editor.findOne({_id: editor}, (err, doc) => {
                 if (err) return;
                 doc.tasks.inChecks.forEach((item, i) => {
@@ -177,6 +175,53 @@ router.post('/get-tasks/accept', auth, (req, res) => {
                 doc.save();
                 res.send({...doc.tasks, editors: doc.editors})
             })
+
+            AmoCRM.request
+                .post( '/api/v2/leads', {
+                    update: [
+                        {
+                            id: task.id,
+                            status_id: 31945801,
+                            updated_at: Date.now(),
+                            name: task.name,
+                            // другие поля ...
+                        }
+                    ]
+                })
+                .then( data => {
+                    console.log("ZBS", data);
+                })
+                .catch( e => {
+                    console.log("PZDC", data);
+                })
+
+            Tasks.findOne({name: 'amoCRMtasksContainer'}, (err, doc) => {
+              if (err) return;
+
+              if (doc.oldTasks.length == 0) {
+                task.cycle = 1;
+                task.date = Date.now();
+                doc.oldTasks.push(task);
+              } else {
+
+                doc.oldTasks.forEach((item, i) => {
+                    if (item.id == task.id) {
+                      task.cycle = item.cycle + 1;
+                      task.date = Date.now();
+                      doc.oldTasks.splice(i, 1);
+                      doc.oldTasks.push(task);
+                    } else {
+                      task.cycle = 1;
+                      task.date = Date.now();
+                      doc.oldTasks.push(task);
+                    }
+                })
+                
+              }
+
+              doc.save();
+            })
+
 
         })
         .catch(err => {

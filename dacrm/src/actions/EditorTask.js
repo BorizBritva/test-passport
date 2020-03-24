@@ -22,12 +22,14 @@ export default function submitTask( data) {
                 if (response.ok) {
                     response.json()
                         .then( tasks => {
-                            if (tasks.error) exit();
-                            //console.log(tasks);
-                            dispatch({
-                                type: "GET_USER_TASKS",
-                                payload: tasks
-                            });
+                            if (tasks.error) {
+                              exit()
+                            } else {
+                              dispatch({
+                                  type: "GET_USER_TASKS",
+                                  payload: tasks
+                              });  
+                            }
                         })
                 }
             })

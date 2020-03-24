@@ -28,9 +28,11 @@ const submitLogin = (e, loginData) => {
                         localStorage.setItem('user', JSON.stringify(data.user));
                         localStorage.setItem('edit', data.edit);
                         if (data.edit == 0) {
+                            //this.props.history.replace(`/dacrm/accounts/acc=${data.username}`);
                             window.location.assign(`${window.location.origin}/dacrm/accounts/acc=${data.username}`)
                         } else {
                             window.location.assign(`${window.location.origin}/dacrm/user/edit=${data.username}`)
+                            //this.props.history.replace(`/dacrm/user/edit=${data.username}`);
                         }
                       }
                   })

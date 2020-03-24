@@ -31,7 +31,6 @@ class Tasks extends React.Component {
     }
 
     render() {
-        console.log(this.props.tasks);
         return(
             <div className="works__wrap">
                 <WorksList works={this.props.tasks.works} submit={this.props.submitTask}/>

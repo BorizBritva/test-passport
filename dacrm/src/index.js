@@ -6,6 +6,7 @@ import * as serviceWorker from './serviceWorker';
 import { Provider } from "react-redux";
 import store from "./store/store";
 import {Helmet} from "react-helmet";
+import { BrowserRouter } from 'react-router-dom';
 
 ReactDOM.render(
     <Provider store={store}>
@@ -14,7 +15,9 @@ ReactDOM.render(
             <title>DA CRM</title>
             <meta name="description" content="DA CRM Official" />
         </Helmet>
-        <App />
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
     </Provider>,
     document.getElementById('root')
 );

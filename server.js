@@ -37,6 +37,12 @@ async function startServer() {
 
         app.use(passport.initialize());
         app.use(passport.session());
+
+        app.use((err, req, res, next) => {
+          if (err.name === 'UnauthorizedError') {
+            res.send({error: 'error'})
+          }
+        })
         //require('./config/passportCrm')(passport);
 
         app.listen(4000, () => {
