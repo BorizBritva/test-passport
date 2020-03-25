@@ -18,12 +18,12 @@ async function startServer() {
         mongoose.connection.on('connected', () => { console.log('MongoDB is connect') });
         mongoose.connection.on('error', (err) => { console.log('Error: no connection with MongoDB', err) });
 
-        // app.use((err, req, res, next) => {
-        //     if (err.name === 'UnauthorizedError') {
-        //         console.log('test')
-        //         res.send('tesr')
-        //     }
-        // })
+         app.use((err, req, res, next) => {
+             if (err.name === 'UnauthorizedError') {
+                 console.log('test')
+                 res.send('tesr')
+             }
+         })
 
         require('./routes/apiamocrm');
         require('./config/passportCrm');

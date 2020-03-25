@@ -29,6 +29,12 @@ export default function rootReducers ( state = initialState, action ) {
         case 'GET_USER_TASKS':
             return {...state, editorTasks: action.payload}
         break;
+        case 'COMMENT':
+            return {...state, commentToTask: action.payload}
+        break;
+        case 'CHANGE_EDITOR':
+            return {...state, editor: action.payload}
+        break;
         default: return state;
     }
 }

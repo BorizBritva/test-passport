@@ -71,6 +71,13 @@ router.post('/get-tasks/takework', auth, (req, res) => {
 
                 Admin.findOne({_id: admin}, (err, doc) => {
                     if (err) return;
+
+                    doc.tasks.considerations.forEach((item, i) => {
+                        if (item.id == task.id) {
+                            doc.tasks.considerations.splice(i, 1)
+                        }
+                    })
+
                     doc.tasks.status.push(task);
                     doc.save();
                 })
@@ -194,11 +201,13 @@ router.post('/get-tasks/back', auth, (req, res) => {
 
     Admin.findOne({_id: admin}, (err, doc) => {
         if (err) return;
-        doc.tasks.works.forEach((item, i) => {
+        doc.tasks.considerations.forEach((item, i) => {
             if (item.id == task.id) {
-                doc.tasks.works.splice(i, 1)
+                doc.tasks.considerations.splice(i, 1)
             }
         })
+        delete task.editor_da;
+        delete task.account_da;
         doc.tasks.considerations.push(task);
         doc.save();
     })

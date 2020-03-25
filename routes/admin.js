@@ -1,5 +1,6 @@
 const express = require('express');
 const secret = require('../config/databaseConf');
+const clearFinal = require('../config/clearFinal');
 const router = express.Router();
 const AmoCRM = require('../routes/apiamocrm');
 const Admin = require('../models/admin/model');
@@ -97,10 +98,10 @@ router.post('/get-tasks/status', auth, (req, res) => {
     Promise.all([Admin.findOne({_id: admin}), Editor.findOne({_id: editor})])
         .then(data => {
 
-            let adminName = { name: 'Аккаунт', values: [ { value: data[0].name } ] };
-            let editName = { name: 'Editor', values: [ { value: data[1].name } ] };
             task.resp_id = admin;
-            task.custom_fields = [ ...task.custom_fields, adminName, editName ];
+            task.account_da = data[0].name;
+            task.editor_da = data[1].name;
+
 
             Editor.findOne({_id: editor}, (err, doc) => {
                 if (err) return;
@@ -115,6 +116,7 @@ router.post('/get-tasks/status', auth, (req, res) => {
                         doc.tasks.considerations.splice(i, 1)
                     }
                 })
+                doc.tasks.considerations.push(task);
                 //doc.tasks.status.push(task);
                 doc.save();
                 res.send({...doc.tasks, editors: doc.editors})
@@ -123,6 +125,61 @@ router.post('/get-tasks/status', auth, (req, res) => {
         .catch(err => {
             return
         })
+
+})
+
+router.post('/get-tasks/reassign', auth, (req, res) => {
+  let admin = req.body.user.toString();
+  let task = req.body.task;
+  let editor = req.body.task.editor;
+  //находим эдитора у которого есть такая задача и удаляем ее
+  Editor.find({}, (err, doc) => {
+    if (err) return;
+
+    doc.forEach((edit, i) => {
+      edit.tasks.allTask.forEach((editTask, i) => {
+        if (editTask.id == task.id) {
+            edit.tasks.allTask.splice(i, 1);
+            edit.save();
+        }
+        return;
+      });
+
+    });
+  })
+  //обновляем списки задач у пользователей системы
+  Promise.all([Admin.findOne({_id: admin}), Editor.findOne({_id: editor})])
+      .then(data => {
+
+          task.resp_id = admin;
+          task.account_da = data[0].name;
+          task.editor_da = data[1].name;
+
+
+          Editor.findOne({_id: editor}, (err, doc) => {
+              if (err) return;
+              doc.tasks.allTask.push(task);
+              doc.save();
+          })
+
+          Admin.findOne({_id: admin}, (err, doc) => {
+              if (err) return;
+              doc.tasks.considerations.forEach((item, i) => {
+                  if (item.id == task.id) {
+                      doc.tasks.considerations.splice(i, 1)
+                  }
+              })
+              doc.tasks.considerations.push(task);
+              //doc.tasks.status.push(task);
+              doc.save();
+              res.send({...doc.tasks, editors: doc.editors})
+          })
+      })
+      .catch(err => {
+          return
+      })
+
+
 
 })
 
@@ -246,5 +303,7 @@ router.post('/get-tasks/accept', auth, (req, res) => {
         })
 
 })
+
+setInterval(() => clearFinal(Admin), (1000*60*60*3));
 
 module.exports = router;

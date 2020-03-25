@@ -3,5 +3,6 @@ export default function selectedUser(e, target) {
       .filter(option => option.selected)
       .map(option => option.dataset.user);
 
-      target.editor = selected[0];
+      //target.editor = selected[0];
+      return selected[0];;
 }

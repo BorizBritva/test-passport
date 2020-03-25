@@ -12,6 +12,14 @@ export default class EditList extends React.Component {
             <span className="content__name">ID:</span>
             <span className="content__value">{item.id}</span>
         </div>
+        <div className="inworks-content">
+            <span className="content__name">Аккаунт:</span>
+            <span className="content__value">{item.account_da}</span>
+        </div>
+        <div className="inworks-content">
+            <span className="content__name">Editor:</span>
+            <span className="content__value">{item.editor_da}</span>
+        </div>
           {createWorksList(item.custom_fields, ['Заказчик', 'Тип крефтивов', 'Количество крео', 'Ссылка на креотивы', 'Замены', 'ТЗ', 'Editor'])}
           <div className="list-butn-wrap">
               <div className="list__button btn btn-primary">На доработке</div>

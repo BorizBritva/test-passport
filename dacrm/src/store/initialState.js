@@ -5,6 +5,8 @@ const initialState = {
     phone: '',
     error: '',
     message: '',
+    commentToTask: '',
+    editor: '',
     sidebarType: '',
     accaunTasks: [],
     editorTasks: []

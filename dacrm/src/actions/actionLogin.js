@@ -104,4 +104,22 @@ const inputPhone = (phone) => {
     }
 }
 
-export {registration, submitLogin, inputLogin, inputPassword, inputName, inputPhone};
+const comment = (comment) => {
+  return (dispatch, getState) => {
+    dispatch({
+      type: 'COMMENT',
+      payload: comment,
+    })
+  }
+}
+
+const changeEditor = (editor) => {
+  return (dispatch, getState) => {
+    dispatch({
+      type: 'CHANGE_EDITOR',
+      payload: editor,
+    })
+  }
+}
+
+export {registration, submitLogin, inputLogin, inputPassword, inputName, inputPhone, comment, changeEditor};

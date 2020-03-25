@@ -12,6 +12,10 @@ export default class FinalWorks extends React.Component {
               <span className="content__name">ID:</span>
               <span className="content__value">{item.id}</span>
           </div>
+          <div className="inworks-content">
+              <span className="content__name">Аккаунт:</span>
+              <span className="content__value">{item.account_da}</span>
+          </div>
           {createWorksList(item.custom_fields, ['Заказчик', 'Количество крео', 'ГЕО', 'Аккаунт'])}
           <div className="list-butn-wrap">
             <div className="list__button btn btn-success">Принято</div>

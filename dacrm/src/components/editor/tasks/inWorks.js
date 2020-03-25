@@ -12,6 +12,10 @@ export default class InWorks extends React.Component {
               <span className="content__name">ID:</span>
               <span className="content__value">{item.id}</span>
           </div>
+          <div className="inworks-content">
+              <span className="content__name">Аккаунт:</span>
+              <span className="content__value">{item.account_da}</span>
+          </div>
           {createWorksList(item.custom_fields, ['Заказчик', 'Количество крео', 'ГЕО', 'Аккаунт'])}
           <div className="list-butn-wrap">
               <input className="list__button btn btn-primary" type="button" value="На проверку"  onClick={() => { this.props.submit({id: localStorage.getItem('user').slice(1, -1), token: localStorage.getItem('token'), task: item, url: 'tocheck'}) }} />
