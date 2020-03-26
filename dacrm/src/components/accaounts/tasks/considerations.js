@@ -36,7 +36,7 @@ export default class ConsList extends React.Component {
                     </div>
                     <div className="consForm__button worksButtonWrap">
                         <input className={`list__button ${!item.hasOwnProperty('editor_da') ? 'btn btn-primary' : 'btn btn-secondary'}`} type="button" value={!item.hasOwnProperty('editor_da') ? 'Назначить' : 'Переназначить'} onClick={() => { this.props.submit( {task: {...item, comment_task: this.props.commentToTask, editor: this.props.editor}, id: localStorage.getItem('user').slice(1, -1), url: !item.hasOwnProperty('editor_da') ? 'status' : 'reassign', token: localStorage.getItem('token') } ) } }/>
-                        <input className="list__button btn btn-danger" type="button" value="Отменить" onClick={() => { this.props.submit( {task: item, id: localStorage.getItem('user').slice(1, -1), url: 'toback', token: localStorage.getItem('token') } ) } }/>
+                        <input className={`list__button btn btn-danger${!item.hasOwnProperty('editor_da') ? '' : ' canc-active'}`} type="button" value="Отменить" onClick={() => { this.props.submit( {task: item, id: localStorage.getItem('user').slice(1, -1), url: 'toback', token: localStorage.getItem('token') } ) } }/>
                     </div>
                 </div>
              </form>

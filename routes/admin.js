@@ -52,7 +52,11 @@ router.post('/get-task', auth, (req, res) => {
     let admin = req.body.id.toString().slice(1, -1);
     Admin.findOne({_id: admin}, (err, doc) => {
         if (err) return;
-        return res.send({...doc.tasks, editors: doc.editors})
+        if (!doc) {
+          return res.send({error: 'error'})
+        } else {
+          return res.send({...doc.tasks, editors: doc.editors})
+        };
     })
 })
 

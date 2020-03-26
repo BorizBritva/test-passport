@@ -170,13 +170,47 @@ const updateTask = () => {
                           return addtask;
                       })
                       .then(addtask => {
-                          Admin.find({}, (err, admins) => {
+                          /*Admin.find({}, (err, admins) => {
                               if (err) return;
                               admins.forEach(item => {
                                   if (!item.tasks.works.find(item => item.id == addtask.id)) item.tasks.works.push(addtask);
                                   item.save();
                               })
-                          })
+                          })*/
+                          Promise.all([Tasks.findOne({name: 'amoCRMtasksContainer'}), Admin.find({})])
+                            .then(data => {
+
+                              let counter = 0;
+
+                              if (data[0].amoTasks.find(item => item.id == addtask.id)) counter+=1;
+
+                              if (data[1]!=null) {
+
+                                data[1].forEach(admin => {
+                                  if (admin.tasks.works.find(item => item.id == addtask.id)) counter+=1;
+                                  if (admin.tasks.considerations.find(item => item.id == addtask.id)) counter+=1;
+                                  if (admin.tasks.appointments.find(item => item.id == addtask.id)) counter+=1;
+                                  if (admin.tasks.status.find(item => item.id == addtask.id)) counter+=1;
+                                  if (admin.tasks.check.find(item => item.id == addtask.id)) counter+=1;
+                                  if (admin.tasks.edits.find(item => item.id == addtask.id)) counter+=1;
+                                  if (admin.tasks.final.find(item => item.id == addtask.id)) counter+=1;
+                                })
+
+                              }
+
+                              if (counter == 0) {
+
+                                Admin.find({}, (err, admins) => {
+                                    if (err) return;
+                                    admins.forEach(item => {
+                                        if (!item.tasks.works.find(item => item.id == addtask.id)) item.tasks.works.push(addtask);
+                                        item.save();
+                                    })
+                                })
+
+                              };
+
+                            })
                       })
 
                   })
@@ -224,13 +258,49 @@ const updateTask = () => {
                                 return addtask;
                             })
                             .then(addtask => {
-                                Admin.find({}, (err, admins) => {
+                                /*Admin.find({}, (err, admins) => {
                                     if (err) return;
                                     admins.forEach(item => {
                                         if (!item.tasks.works.find(item => item.id == addtask.id)) item.tasks.works.push(addtask);
                                         item.save();
                                     })
-                                })
+                                })*/
+                                Promise.all([Tasks.findOne({name: 'amoCRMtasksContainer'}), Admin.find({})])
+                                  .then(data => {
+
+                                    let counter = 0;
+
+                                    if (data[0].amoTasks.find(item => item.id == addtask.id)) counter+=1;
+
+                                    if (data[1]!=null) {
+
+                                      data[1].forEach(admin => {
+                                        if (admin.tasks.works.find(item => item.id == addtask.id)) counter+=1;
+                                        if (admin.tasks.considerations.find(item => item.id == addtask.id)) counter+=1;
+                                        if (admin.tasks.appointments.find(item => item.id == addtask.id)) counter+=1;
+                                        if (admin.tasks.status.find(item => item.id == addtask.id)) counter+=1;
+                                        if (admin.tasks.check.find(item => item.id == addtask.id)) counter+=1;
+                                        if (admin.tasks.edits.find(item => item.id == addtask.id)) counter+=1;
+                                        if (admin.tasks.final.find(item => item.id == addtask.id)) counter+=1;
+                                      })
+
+                                    }
+
+                                    if (counter == 0) {
+
+                                      Admin.find({}, (err, admins) => {
+                                          if (err) return;
+                                          admins.forEach(item => {
+                                              if (!item.tasks.works.find(item => item.id == addtask.id)) item.tasks.works.push(addtask);
+                                              item.save();
+                                          })
+                                      })
+
+                                    };
+
+                                  })
+
+
                             })
 
                         })
